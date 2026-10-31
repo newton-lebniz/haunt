@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Haunt: a ghost that will not leave until you finish</title>
+<meta name="description" content="A small ghost haunts your screen until it can see your task is done. Its voice and eyes are a local Gemma model. Your screen never leaves your laptop.">
+<style>
+:root{--night:#1b1035;--panel:#2a1950;--gold:#f7a11a;--ink:#f4ead8;--dim:#b9a9d6;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--night);color:var(--ink);font:18px/1.65 var(--serif)}
+main{max-width:720px;margin:0 auto;padding:48px 16px 72px}
+svg{display:block;width:180px;height:auto;margin:0 auto 8px;filter:drop-shadow(0 0 24px rgba(170,150,255,.55));animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){svg{animation:none}}
+h1{font-size:clamp(2.6rem,9vw,4.4rem);line-height:1;margin:.1em 0 .2em;text-align:center;color:#ffd166}
+.lede{text-align:center;max-width:34em;margin:0 auto 40px}
+h2{font-size:1.5rem;color:var(--gold);margin:40px 0 6px}
+p,li{max-width:62ch}
+ol{padding-left:1.2em}
+.say{background:var(--panel);border:2px solid var(--gold);border-radius:14px;padding:14px 18px;font-style:italic;margin:18px 0}
+a{color:#ffd166}
+footer{margin-top:56px;color:var(--dim);font-size:.92rem}
+</style></head>
+<body><main>
+<svg viewBox="0 0 200 230" role="img" aria-label="A small white ghost">
+<path d="M35 105 C35 5 165 5 165 105 L165 185 Q148.75 211 132.5 185 Q116.25 175 100 185 Q83.75 211 67.5 185 Q51.25 175 35 185 Z" fill="#f6f4ff" stroke="#c9c2ff" stroke-width="2"/>
+<circle cx="70" cy="80" r="12" fill="#1b1035"/><circle cx="130" cy="80" r="12" fill="#1b1035"/><ellipse cx="100" cy="122" rx="10" ry="11" fill="#1b1035"/>
+</svg>
+<h1>Haunt</h1>
+<p class="lede">A small ghost that haunts your screen until it can see your task is done. Its voice and its eyes are a local Gemma model, so your screen never leaves your laptop.</p>
+
+<h2>How it works</h2>
+<ol>
+<li>Add a task. Every few minutes the ghost fades in over whatever you are doing, with a line from Gemma. The longer you ignore it, the angrier it gets.</li>
+<li>Click <b>I did it</b>. The ghost hides, takes one screenshot, and asks Gemma whether it shows the work.</li>
+<li>If it does not, the ghost tells you what it does see, and stays.</li>
+</ol>
+<p class="say">I see a YouTube video of cats. That is not "Finish the report".</p>
+<p>Tasks tied to a file or a git commit finish on their own the moment you save or commit, with no AI involved.</p>
+
+<h2>Why a local model</h2>
+<p>A ghost that watches your desktop sees your mail and your messages. That is only acceptable if the screenshot goes to your own machine and nowhere else.</p>
+
+<h2>Try it</h2>
+<p><a href="YOUR_GITHUB_URL">Code and setup</a> &middot; <a href="YOUR_VIDEO_URL">Demo video</a></p>
+<footer>Built for the DEV Hacktoberfest Open-Source AI Challenge, Week 4. This page loads no scripts, fonts or trackers.</footer>
+</main></body></html>
