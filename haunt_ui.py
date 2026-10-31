@@ -4,6 +4,7 @@ from __future__ import annotations
 import math
 import random
 import signal
+import subprocess
 import threading
 import time
 
@@ -12,6 +13,22 @@ from PySide6.QtGui import QColor, QFont, QGuiApplication, QPainter, QPainterPath
 from PySide6.QtWidgets import QApplication, QFrame, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
 
 import haunt
+
+def speak_windows(text: str) -> None:
+    """Speak ghost dialogue through Windows' built-in offline TTS."""
+    try:
+        subprocess.run(
+            ["powershell.exe", "-NoProfile", "-Command",
+             "Add-Type -AssemblyName System.Speech; "
+             "$s = New-Object System.Speech.Synthesis.SpeechSynthesizer; "
+             "$s.Speak([Console]::In.ReadToEnd()); $s.Dispose()"],
+            input=text, text=True,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            timeout=45, check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        pass
+
 
 CARD_CSS = """
 #card{background:#2a1950;border:2px solid #f7a11a;border-radius:14px}
@@ -105,7 +122,7 @@ class GhostWindow(QWidget):
     """Frameless, see-through, always on top, and it never steals keyboard focus from what you are typing."""
 
     def __init__(self, line: str, level: int, mood: str, source: str, buttons: list, quiet: bool = True):
-        super().__init__(None, Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
+        super().__init__(None, Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAttribute(Qt.WA_ShowWithoutActivating)
         self.level = level
@@ -170,7 +187,7 @@ class GhostWindow(QWidget):
         self.fade.setEasingCurve(QEasingCurve.InOutQuad)
         self.fade.start()
         if self.level >= 2 and not self.quiet:
-            QApplication.beep()
+            threading.Thread(target=speak_windows, args=(self.text.text(),), daemon=True).start()
 
 
 class Haunter(QObject):
